@@ -1,10 +1,9 @@
 from datetime import datetime
 import re
-# from ShowFields import ShowAddress, ShowBirthday, ShowEmail, ShowPhone, ShowName
 
 class ShowField:
     def show_field(self, value):
-        raise NotImplemented("ShowField.show_field") #pass
+        raise NotImplemented("ShowField.show_field") 
 
 class ShowAddress(ShowField):
     def show_field(self, value):
@@ -24,8 +23,8 @@ class ShowName(ShowField):
         
 class ShowPhone(ShowName):
     def show_field(self, value):
-        return f"phone: ({self.value[0:3]}){self.value[3:6]}-{self.value[6:]}"
-   
+        # return f"phone: ({self.value[0:3]}){self.value[3:6]}-{self.value[6:]}"
+        return f"phone: ({value[0:3]}){value[3:6]}-{value[6:]}"
 
 
 class Field:
@@ -95,9 +94,18 @@ class Name(Field):
         if not newvalue.isalpha():
             raise ValueError(f"ERROR: invalid letters in the name '{newvalue}'")
 
+
+class Tagname(Name):
+    def validate(self, newvalue):
+        if (len(newvalue) <=2) or (len(newvalue) >=12):
+            raise ValueError(f"ERROR: Name '{newvalue}' shoud be from 3 to 12 letters")
+        if not newvalue.isalnum():
+            raise ValueError(f"ERROR: invalid letters in the name '{newvalue}'")
+        
+
 class Phone(Name):
-    def __str__(self):
-        return f"({self.value[0:3]}){self.value[3:6]}-{self.value[6:]}"
+    # def __str__(self):
+    #     return f"({self.value[0:3]}){self.value[3:6]}-{self.value[6:]}"
 
     def validate(self, newvalue):
         if len(newvalue) != 10:
